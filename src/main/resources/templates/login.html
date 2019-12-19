@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<link href="css/login.css" type="text/css" rel="stylesheet" media="all">
+<!--head部分-->
+<head th:include="layout :: htmlhead" th:with="title='服装销售系统'">
+</head>
+<style>
+    body {
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-attachment: fixed;
+    }
+</style>
+<body background="images/bg.jpg">
+
+<div class="div_01">
+    <form class="layui-form"  action="main" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="text-align: center;width: 90%;font-size: 17px" >用户登录</label>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">用户名：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username"  lay-verify="required" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">密&emsp;码：</label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password"  lay-verify="required" autocomplete="on" class="layui-input">
+                </div>
+            </div>
+            <a th:text="${info}" style="color: #f5070a;margin-left: 200px"></a>
+        </div>
+        <div class="layui-form-item" style="text-align: center;padding-bottom: 20px;padding-left: 10px">
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <button type="submit" class="layui-btn layui-btn-fluid"  lay-submit="">登&emsp;&emsp;&emsp;录</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

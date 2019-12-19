@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>服装销售系统</title>
+    <link rel="icon" href="images/logo.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./webjars/layui/2.5.5/css/layui.css"/>
+    <script src="./webjars/layui/2.5.5/layui.js"></script>
+</head>
+
+<body class="layui-layout-body">
+<header >
+    <div class="layui-layout-admin">
+        <div class="layui-header">
+            <a href="javascript:;" class="layui-hide-xs">
+                <a href="/homePage" style="font-weight: bold;">
+                    <div class="layui-logo">服装销售系统</div>
+                </a>
+            </a>
+            <a href="javascript:;" class="layui-hide-xs">
+                <div class="switchMenu" style="display: none;"><i class="fa fa-indent"></i></div>
+            </a>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" th:text="${user.getUsername()}">
+
+                        <!--                    <shiro:principal property="sysUserName"></shiro:principal>-->
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd id="updUsePwdDd" class="layui-this"><a href="javascript:;"
+                                                                   onclick="updateUsePwd();">修改密码</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/logout">退出</a></li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <!--<a href="javascript:;">销售</a>-->
+                        <dl class="" th:each="j:${jurisdictions}">
+                            <dd><a href="" th:text="${j.getFunction()}">商品</a></dd>
+                        </dl>
+                    </li>
+
+                    <!--经理功能-->
+<!--                    <li class="layui-nav-item">-->
+<!--                        &lt;!&ndash;<a href="javascript:;">经理</a>&ndash;&gt;-->
+<!--                        &lt;!&ndash;layui-nav-child&ndash;&gt;-->
+<!--                        <dl class="">-->
+<!--                        </dl>-->
+<!--                    </li>-->
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <div class="layui-container">
+                <div class="layui-row">
+                    <div class="layui-col-xs9">
+                        &nbsp;
+                        <h1 style="padding-top:50px;line-height:2.0;">
+                            <!--<shiro:principal property="sysUserName"></shiro:principal>-->
+                            <a th:text="${user.getName()}"></a>
+                            ，欢迎登录
+                            <span style="font-weight: bold;font-size:28px;">服装销售系统</span></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./webjars/layui/2.5.5/layui.all.js"></script>
+</header>
+</body>
+</html>

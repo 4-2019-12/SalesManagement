@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzit.salesmanagement.mapper.UsersMapper">
+
+    <resultMap id="usersBean" type="com.xzit.salesmanagement.entity.Users">
+        <id column="uid" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="name" property="name"/>
+        <result column="mobile" property="mobile"/>
+        <result column="purchaseId" property="purchaseId"/>
+        <result column="roleId" property="roleId"/>
+        <collection property="jurisdictions" ofType="com.xzit.salesmanagement.entity.Jurisdiction">
+            <id column="jid" property="id"/>
+            <result column="function" property="function"/>
+        </collection>
+    </resultMap>
+    
+<!--    <select id="selectRole" resultType="java.lang.Integer">-->
+<!--        select roleId from users where username = #{username}-->
+<!--    </select>-->
+
+    <select id="getJurisdiction" resultType="com.xzit.salesmanagement.entity.Jurisdiction">
+        select a.*,a.id 'jid',a.function 'function'
+        from jurisdiction a
+        left join roles_jurisdiction b on a.id = b.jurisdictionId
+        where b.roleId = #{role}
+    </select>
+<!--    ,c.id 'uid',c.username  'username',c.password 'password',c.name 'name' c.mobile 'mobile' c.purchaseId 'purchaseId' c.roleId 'roleId'-->
+</mapper>
