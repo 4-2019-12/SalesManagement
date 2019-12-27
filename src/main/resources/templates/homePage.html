@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>服装销售系统</title>
-    <link rel="icon" href="images/logo.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./webjars/layui/2.5.5/css/layui.css"/>
-    <script src="./webjars/layui/2.5.5/layui.js"></script>
+<head th:include="homePage_layout :: htmlhead">
 </head>
 
 <body class="layui-layout-body">
-<header >
+<header>
     <div class="layui-layout-admin">
         <div class="layui-header">
             <a href="javascript:;" class="layui-hide-xs">
-                <a href="/homePage" style="font-weight: bold;">
+                <a href="#" style="font-weight: bold;">
                     <div class="layui-logo">服装销售系统</div>
                 </a>
             </a>
@@ -23,7 +18,6 @@
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
                     <a href="javascript:;" th:text="${user.getUsername()}">
-
                         <!--                    <shiro:principal property="sysUserName"></shiro:principal>-->
                     </a>
                     <dl class="layui-nav-child">
@@ -40,18 +34,18 @@
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item layui-nav-itemed">
                         <!--<a href="javascript:;">销售</a>-->
-                        <dl class="" th:each="j:${jurisdictions}">
-                            <dd><a href="" th:text="${j.getFunction()}">商品</a></dd>
+                        <dl th:each="j:${jurisdictions}">
+                            <dd><a href="#" style="text-decoration:none" th:class="${'function'+j.getId()}"
+                                   th:text="${'&emsp;&emsp;'+j.getFunction()}">&emsp;&emsp;商品</a></dd>
                         </dl>
                     </li>
-
                     <!--经理功能-->
-<!--                    <li class="layui-nav-item">-->
-<!--                        &lt;!&ndash;<a href="javascript:;">经理</a>&ndash;&gt;-->
-<!--                        &lt;!&ndash;layui-nav-child&ndash;&gt;-->
-<!--                        <dl class="">-->
-<!--                        </dl>-->
-<!--                    </li>-->
+                    <!--                    <li class="layui-nav-item">-->
+                    <!--                        &lt;!&ndash;<a href="javascript:;">经理</a>&ndash;&gt;-->
+                    <!--                        &lt;!&ndash;layui-nav-child&ndash;&gt;-->
+                    <!--                        <dl class="">-->
+                    <!--                        </dl>-->
+                    <!--                    </li>-->
                 </ul>
             </div>
         </div>
@@ -59,8 +53,8 @@
         <div class="layui-body">
             <div class="layui-container">
                 <div class="layui-row">
-                    <div class="layui-col-xs9">
-                        &nbsp;
+                    <div id="content" class="layui-col-xs9"></div>
+                    <div id="container" class="layui-col-xs9">
                         <h1 style="padding-top:50px;line-height:2.0;">
                             <!--<shiro:principal property="sysUserName"></shiro:principal>-->
                             <a th:text="${user.getName()}"></a>
@@ -71,7 +65,23 @@
             </div>
         </div>
     </div>
-    <script src="./webjars/layui/2.5.5/layui.all.js"></script>
 </header>
+
+<script type="text/javascript">
+    // $.ajax({
+    //     url:'/test',
+    //     type:'get',
+    //     success:function(res){
+    //         $('#router').html($(res));
+    //     }
+    // });
+    // $('#router').load('./test.html');
+    $(document).ready(function () {
+        $(".function1").click(function () {
+            $("#container").load('viewProducts');
+        });
+    });
+
+</script>
 </body>
 </html>

@@ -1,13 +1,14 @@
 debug: true
 
 spring:
+  resources:
+    static-locations: classpath:static/   #设置静态资源路径
   datasource:
     url: jdbc:mysql://localhost:3306/sale_db?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-  resources:
-    static-locations: classpath:static/   #设置静态资源路径
+
 
   #设置前缀和后缀
   thymeleaf:
