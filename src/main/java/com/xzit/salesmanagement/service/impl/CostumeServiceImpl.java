@@ -18,4 +18,9 @@ public class CostumeServiceImpl implements CostumeService {
     public List<Costume> listCostumes() {
         return costumeMapper.findAll();
     }
+
+    @Override
+    public int addCostume(Costume costumeInfo) {
+        return costumeMapper.insert(costumeInfo);
+    }
 }

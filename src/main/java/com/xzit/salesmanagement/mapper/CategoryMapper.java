@@ -7,9 +7,11 @@ import java.util.List;
 
 @Mapper
 public interface CategoryMapper {
+//    @Select("select * from category where id= #{id} ")
+    public Category getCategory(@Param("id") int id);
 //
-//    @Select("select * from category_ ")
-//    List<Category> findAll();
+    @Select("select * from category")
+    List<Category> findAllCategory();
 //
 //    @Insert(" insert into category_ ( name,a) values (#{name},#{a}) ")
 //    public int save(Category category);

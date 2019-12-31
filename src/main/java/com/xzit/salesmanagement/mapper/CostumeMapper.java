@@ -10,4 +10,7 @@ import java.util.List;
 public interface CostumeMapper {
     @Select("select * from costume")
     public List<Costume> findAll();
+
+
+    int insert(Costume costumeInfo);
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>查看产品</title>
+</head>
+<body>
+    <div>
+        <div class="demo">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-grid" th:each="costume:${costumeList}">
+                            <div class="product-image">
+                                <a href="#">
+                                    <img style="width: 260px" class="pic-1" th:src="${costume.getPicture()}">
+                                </a>
+                            </div>
+                            <div class="product-content">
+                                <h3 class="title"><a href="#" th:text="${costume.getName()}">Men's Shirt</a></h3>
+                                <div class="price">
+                                    <p th:text="${costume.getPrice()*costume.getDiscount().getDiscount()}" style="display:inline">$11.00</p>
+                                    <span th:text="${costume.getPrice()}">$14.00</span>
+                                </div>
+                            </div>
+                            <ul class="social">
+                                <li><a href="#" data-tip="查看详情"><i class="fa fa-search"></i></a></li>
+                                <li><a href="#" data-tip="加入选购"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+    $(document).ready(
+        function ajaxRePost(url,params){
+        var message = 1;
+        var options={
+            type:"GET",
+            url:"getDiscount",
+            data:{
+                discountId:$("span[name=")
+            },
+            async:false,
+            success:function (msg) {
+                message=msg;
+            }
+        };
+        $.ajax(options);
+//     debugger;
+        $("#count").text(message);
+        return message;
+    })
+</script>
+</body>
+</html>

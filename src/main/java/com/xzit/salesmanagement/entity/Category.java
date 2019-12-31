@@ -6,6 +6,15 @@ public class Category {
     private String name;
     private String describe;
     private int role;
+    private int parent;
+
+    public int getParent() {
+        return parent;
+    }
+
+    public void setParent(int parent) {
+        this.parent = parent;
+    }
 
     public int getId() {
         return id;

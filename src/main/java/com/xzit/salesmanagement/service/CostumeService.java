@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CostumeService {
     public List<Costume> listCostumes();
+
+    int addCostume(Costume costumeInfo);
 }

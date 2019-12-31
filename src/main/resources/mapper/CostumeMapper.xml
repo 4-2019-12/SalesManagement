@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xzit.salesmanagement.mapper.CostumeMapper">
+<resultMap id="BaseResultMap" type="com.xzit.salesmanagement.entity.Costume">
+<id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="price" jdbcType="DOUBLE" property="price"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="picture" jdbcType="VARCHAR" property="picture"/>
+    <result column="cost" jdbcType="DOUBLE" property="cost"/>
+    <result column="describes" jdbcType="VARCHAR" property="describes"/>
+    <result column="categoryId" jdbcType="INTEGER" property="categoryId"/>
+    <result column="stock" jdbcType="INTEGER" property="stock"/>
+    <result column="warehouseId" jdbcType="VARCHAR" property="warehouseId"/>
+    <result column="discountId" jdbcType="INTEGER" property="discountId"/>
+</resultMap>
+
+<insert id="insert" parameterType="com.xzit.salesmanagement.entity.Costume">
+    insert into costume (price,name,picture,cost,describes,categoryId,stock,discountId)
+    values (#{price},#{name},#{picture},#{cost},#{describes},#{categoryId},#{stock},#{discountId})
+</insert>
+    
+</mapper>
