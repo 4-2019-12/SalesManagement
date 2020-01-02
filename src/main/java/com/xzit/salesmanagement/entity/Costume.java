@@ -27,6 +27,18 @@ public class Costume {
         this.discountId = discountId;
     }
 
+
+    public Costume(int id,Double price, String name, String picture, Double cost, String describes, int categoryId, int stock, int discountId) {
+        this.id = id;
+        this.price = price;
+        this.name = name;
+        this.picture = picture;
+        this.cost = cost;
+        this.describes = describes;
+        this.categoryId = categoryId;
+        this.stock = stock;
+        this.discountId = discountId;
+    }
     public Discount getDiscount() {
         return discount;
     }

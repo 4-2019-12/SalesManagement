@@ -2,20 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="htmlhead">
     <meta charset="UTF-8">
-    <title>服装销售系统</title>
-    <link rel="icon" href="images/logo.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="./webjars/layui/2.5.5/css/layui.css"/>
-    <script src="./webjars/layui/2.5.5/layui.js"></script>
-    <script src="./webjars/layui/2.5.5/layui.all.js"></script>
-    <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
+    <link rel="icon" th:href="@{images/logo.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.5/css/layui.css}"/>
+    <script th:src="@{/webjars/layui/2.5.5/layui.js}"></script>
+    <script th:src="@{/webjars/layui/2.5.5/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{js/jquery/jquery-3.3.1.min.js}"></script>
     <!--响应式框架-->
-    <link rel="stylesheet" type="text/css" href="css/costume/bootstrap-grid.min.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{css/costume/bootstrap-grid.min.css}" />
 
     <!--图标样式-->
-    <link href="css/costume/font-awesome.min.css" rel="stylesheet">
+    <link th:href="@{css/costume/font-awesome.min.css}" rel="stylesheet">
 
     <!--可无视-->
-    <link rel="stylesheet" type="text/css" href="css/costume/demo.css">
+    <link rel="stylesheet" type="text/css" th:href="@{css/costume/demo.css}">
 </head>
 <body>
 

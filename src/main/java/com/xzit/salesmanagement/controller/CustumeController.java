@@ -1,6 +1,8 @@
 package com.xzit.salesmanagement.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.xzit.salesmanagement.entity.Category;
 import com.xzit.salesmanagement.entity.Costume;
 import com.xzit.salesmanagement.entity.Discount;
@@ -10,15 +12,13 @@ import com.xzit.salesmanagement.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class CustumeController {
@@ -48,37 +48,48 @@ public class CustumeController {
     //跳转管理商品页面
     @RequestMapping(value = "/listCostume")
     public String listCostume(Model model) {
-        List<Costume> costumeList;
-        costumeList = costumeService.listCostumes();
-        for (Costume c : costumeList) {
+        List<Costume> queryResult = costumeService.findAllByPageF(1, 5);
+//        PageInfo<Costume> queryResult = costumeService.findAllByPageS(1, 5);
+        PageInfo<Costume> pageInfo = new PageInfo<Costume>(queryResult);
+//        System.out.println(queryResult);
+//        System.out.println(pageInfo);
+
+//        List<Costume> costumeList;
+//        costumeList = costumeService.listCostumes();
+        for (Costume c : queryResult) {
             c.setDiscount(discountService.getDiscount(c.getDiscountId()));
             c.setCategory(categoryService.getCategory(c.getCategoryId()));
         }
-        model.addAttribute("costumeList", costumeList);
+//        model.addAttribute("costumeList", costumeList);
+        model.addAttribute("costumeList", queryResult);
+        model.addAttribute("pageInfo",pageInfo);
         return "costume/listCostume";
     }
 
-    //添加商品
-    @RequestMapping(value = "/addCostume")
-    public String addCostume(Model model) {
+    //跳转管理商品页面
+    @RequestMapping("/addCostume/{id}")
+    public String toAddpage(@PathVariable("id") Integer id, Model model) {
+
+        System.out.println(id);
+        Costume costume=null;
+        if(!id.equals("0")){
+            costume = costumeService.getCostume(id);
+        }
+        model.addAttribute("costume",costume);
         List<Category> categoryList = categoryService.listCategory();
         List<Discount> discountList = discountService.listDiscount();
         model.addAttribute("discountList", discountList);
         model.addAttribute("categoryList", categoryList);
-        return "costume/addCostume";
-    }
-
-    //跳转管理商品页面
-    @RequestMapping("/editCostume/{id}")
-    public String toAddpage(@PathVariable("id") Integer id, Model model) {
-        System.out.println("id=" + id);
+        model.addAttribute("flag",id);
         return "costume/addCostume";
     }
 
     @RequestMapping(value = "/costumeInfo/ajaxValid", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public String addCostume(@RequestBody JSONObject jsonParam, Model model// 获取校验错误信息
+    public String addCostume(@RequestBody JSONObject jsonParam
     ) throws Exception {
+        int info;
         String json = jsonParam.toJSONString();
+        int id = Integer.parseInt(JSONObject.parseObject(json).getString("costumeId"));
         int category=Integer.parseInt(JSONObject.parseObject(json).getString("categoryId"));
         Double price =Double.valueOf(JSONObject.parseObject(json).getString("price"));
         int discount =Integer.parseInt(JSONObject.parseObject(json).getString("discount"));
@@ -87,15 +98,25 @@ public class CustumeController {
         int stock = Integer.parseInt(JSONObject.parseObject(json).getString("stock"));
         String describe = JSONObject.parseObject(json).getString("describe");
         Double cost = Double.valueOf(JSONObject.parseObject(json).getString("cost"));
-
-        Costume costume =new Costume(price,name,picture,cost,describe,category,stock,discount);
-        System.out.println(costume);
-        model.addAttribute("costumeInfo", costume);
-        System.out.println(costume);
-        //验证通过后提交到数据库--此处略
-        int infor = costumeService.addCostume(costume);
+        if(id==0){
+            Costume costume =new Costume(price,name,picture,cost,describe,category,stock,discount);
+            info = costumeService.addCostume(costume);
+        }else {
+            Costume costume =new Costume(id,price,name,picture,cost,describe,category,stock,discount);
+            info = costumeService.updateCostume(costume);
+        }
+        System.out.println(info);
         // 页面转发
         return "costume/listCostume";
+    }
+
+    @RequestMapping(value = "/delCostume", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String delCostume(@RequestBody String costumeId){
+        int id = Integer.valueOf(costumeId.substring(costumeId.lastIndexOf("=")+1));
+        FileController.deleteFile(costumeService.getCostume(id).getPicture());
+        costumeService.delCostumeById(id);
+        return "success";
     }
 
 }

@@ -4,17 +4,7 @@ public class Category {
 
     private int id;
     private String name;
-    private String describe;
-    private int role;
-    private int parent;
-
-    public int getParent() {
-        return parent;
-    }
-
-    public void setParent(int parent) {
-        this.parent = parent;
-    }
+    private String describes;
 
     public int getId() {
         return id;
@@ -33,23 +23,15 @@ public class Category {
     }
 
     public String getDescribe() {
-        return describe;
+        return describes;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
+    public void setDescribe(String describes) {
+        this.describes = describes;
     }
 
     @Override
     public String toString() {
-        return "Category{" + "id=" + id + ", name='" + name + '\'' + ", describe='" + describe + '\'' + ", role=" + role + '}';
+        return "Category{" + "id=" + id + ", name='" + name + '\'' + ", describe='" + describes + '\'' + '}';
     }
 }

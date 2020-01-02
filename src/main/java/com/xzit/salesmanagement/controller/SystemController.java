@@ -47,6 +47,6 @@ public class SystemController {
 
     @RequestMapping(value = "/test")
     public String test() {
-        return "test";
+        return "demo";
     }
 }

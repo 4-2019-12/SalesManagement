@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>商品管理</title>
-    <link rel="stylesheet" href="./webjars/layui/2.5.5/css/layui.css"/>
-    <script src="./webjars/layui/2.5.5/layui.js"></script>
-    <script src="./webjars/layui/2.5.5/layui.all.js"></script>
-    <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.5/css/layui.css}"/>
+    <script th:src="@{/webjars/layui/2.5.5/layui.js}"></script>
+    <script th:src="@{/webjars/layui/2.5.5/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery/jquery-3.3.1.min.js}"></script>
 </head>
 <body>
 
@@ -14,11 +14,11 @@
     <legend>商品信息</legend>
 </fieldset>
 <form method="post" enctype="multipart/form-data">
-    <input style="margin-left: 40px;margin-bottom:20px;width: 150px" type="file" id="filename" name="file"/>
+    <input style="margin-left: 40px;margin-bottom:20px;width: 150px" type="file" id="filename"/>
     <div class="layui-form-item">
         <div class="layui-inline">
             <div class="layui-upload">
-                <img id="onLoadImage" src="#" style="margin-left: 40px;width: 100px;height: 100px">
+                <img id="onLoadImage" th:src="${costume?.getPicture()}" style="margin-left: 40px;width: 100px;height: 100px">
                 <p></p>
                 <div style="margin-left:40px" class="layui-inline layui-word-aux">
                     限制 100KB 以内
@@ -32,7 +32,7 @@
 </form>
 
 <form class="layui-form" action="" id="costumeForm">
-    <input type="text" style="display: none" name="picture" id="picture"/>
+    <input type="text" th:value="${costume?.getPicture()}" style="display: none" name="picture" id="picture"/>
     <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">所属类别</label>
@@ -40,7 +40,7 @@
                 <select name="categoryId">
                     <option value="">选择类别</option>
                     <option th:each="category:${categoryList}" th:value="${category.getId()}"
-                            th:text="${category.getName()}">1
+                            th:text="${category.getName()}" th:selected="${costume?.getId() eq category.getId()}">1
                     </option>
                 </select>
             </div>
@@ -49,13 +49,13 @@
         <div class="layui-inline">
             <label class="layui-form-label">商品名称</label>
             <div class="layui-input-inline">
-                <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" th:value="${costume?.getName()}" name="name" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">商品价格</label>
             <div class="layui-input-inline">
-                <input type="text" name="price" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" th:value="${costume?.getPrice()}" value="" name="price" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
                 <select name="discount">
                     <option value="">选择折扣</option>
                     <option th:each="discount:${discountList}" th:value="${discount.getId()}"
-                            th:text="${discount.getName()}">1
+                            th:text="${discount.getName()}" th:selected="${costume?.getDiscountId() eq discount.getId()}">1
                     </option>
                 </select>
             </div>
@@ -75,13 +75,13 @@
         <div class="layui-inline">
             <label class="layui-form-label">商品成本</label>
             <div class="layui-input-inline">
-                <input type="text" name="cost" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" th:value="${costume?.getCost()}" name="cost" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">设置库存</label>
             <div class="layui-input-inline">
-                <input type="text" name="stock" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" th:value="${costume?.getStock()}" name="stock" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -90,15 +90,15 @@
         <div class="layui-form-item layui-form-text" style="margin-right: 50px">
             <label class="layui-form-label">商品描述</label>
             <div class="layui-input-block">
-                <textarea name="describe" placeholder="请输入内容" class="layui-textarea"></textarea>
+                <textarea name="describe" th:text="${costume?.getDescribe()}" placeholder="请输入内容" class="layui-textarea"></textarea>
             </div>
         </div>
     </div>
 
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" lay-filter="savebtn">保存</button>
-            <button class="layui-btn" lay-submit="" lay-filter="ajaxsavebtn">保存(ajax)</button>
+            <input style="display: none" name="costumeId" th:value="${flag}">
+            <button class="layui-btn" lay-submit="" lay-filter="ajaxsavebtn">保存</button>
             <button class="layui-btn layui-btn-primary btn-close">关闭</button>
         </div>
     </div>
@@ -114,14 +114,15 @@
    3.cache设置为false，上传文件不需要缓存。
    4.contentType设置为false，不设置contentType值，因为是由<form>表单构造的FormData对象，且已经声明了属性enctype="multipart/form-data"，所以这里设置为false。
    */
-    function checkSubmit() {
+    function checkSubmit(){
         var formdata = new FormData();
         formdata.append('fileName', $('#filename').get(0).files[0]);
         $.ajax({
-            url: "fileUpload",
+            async: false,
+            url: "/fileupload",
             type: 'POST',
-            dataType: "json",
             data: formdata,
+            dataType: "json",
             contentType: false,//ajax上传图片需要添加
             processData: false,//ajax上传图片需要添加
             success: function (data) {
@@ -142,7 +143,6 @@
             laydate = layui.laydate,
             $ = layui.$;
 
-
         $(".btn-close").click(function () {
             //关闭父窗口
             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -154,23 +154,20 @@
             //layui把表单中的数据封装到data
             //表单中用户输入的商品信息封装为json对象
             var json = JSON.stringify(data.field);
-            alert(json);
-            var method = (data.field.id) == 0 ? "post" : "put";
-            $(".ajaxErrorDiv").html();
             //发起ajax请求
             $.ajax({
-                url: "costumeInfo/ajaxValid",
+                url: "/costumeInfo/ajaxValid",
                 type: "post",
                 data: json,
                 contentType: "application/json",
                 success: function (result) {
                     //关闭父窗口
-                    alert("success")
                     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                     // window.opener.location.reload();
                     // window.close();
                     // parent.location.reload();
-                    parent.$("#container").load('listCostume');
+                    // parent.$("#container").load('listCostume');
+                    parent.location.reload();
                     parent.layer.close(index); //再执行关闭
                     //请求发送成功后
                 },
@@ -179,6 +176,7 @@
                     // progressClose();
                 },
                 error: function (XMLHttpRequest, textStatus) {
+                    alert("error")
                     //请求发送失败
                 },
 
