@@ -40,7 +40,7 @@ public class SystemController {
         }
         model.addAttribute("user", user);
         model.addAttribute("jurisdictions",jurisdictions);
-        session.setAttribute("user",user.getUsername());
+        session.setAttribute("user",user);
         return "homePage";
 
     }
