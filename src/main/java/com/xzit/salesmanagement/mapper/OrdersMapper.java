@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 
 @Mapper
 public interface OrdersMapper {
@@ -14,4 +16,7 @@ public interface OrdersMapper {
 
     @Insert("insert into orders (id,state,userId) values (#{id},'nosubmit',#{userId})")
     void createOrder(String id, int userId);
+
+    @Select("select * from orders")
+    List<Orders> findAll();
 }

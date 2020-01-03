@@ -1,6 +1,7 @@
 package com.xzit.salesmanagement.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xzit.salesmanagement.config.CourseDatagrid;
 import com.xzit.salesmanagement.entity.Costume;
 import com.xzit.salesmanagement.entity.Orders;
 import com.xzit.salesmanagement.entity.Users;
@@ -10,17 +11,16 @@ import com.xzit.salesmanagement.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/car")
@@ -53,12 +53,11 @@ public class OrdersController {
         Orders orders = ordersService.getOrdersByState();
         String date = "";
         if(orders==null){
-            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
-            date =df.format(new Date());// new Date()为获取当前系统时间
             HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             HttpSession session=request.getSession();
             Users user=(Users) session.getAttribute("user");
-            System.out.println(user);
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
+            date =df.format(new Date())+user.getId();// new Date()为获取当前系统时间
             ordersService.createOrders(date,user.getId());
         }
         date = orders.getId();
@@ -69,4 +68,32 @@ public class OrdersController {
         System.out.println(orders);
         return "costume/viewProducts";
     }
+
+    //按条件分页查询课程信息
+    @RequestMapping("/jwclist")
+    @ResponseBody
+    public CourseDatagrid<Orders> orderlist(
+            @RequestParam(value = "page",defaultValue = "1",required = false) int page,
+            @RequestParam(value = "limit",defaultValue = "10",required = false) int rows,
+            String state){
+
+        List<Orders> ordersList = ordersService.findAll();
+        List<Orders> ordersList1 = new ArrayList<>();
+        for (int i=page*rows-rows;i<page*rows&&i<ordersList.size();i++){
+            ordersList1.add(ordersList.get(i));
+        }
+        CourseDatagrid<Orders> courseDatagrid = new CourseDatagrid<Orders>();
+//        PageInfo<Orders> courseinfos = ordersService.jwcCourseinfoSelect(state, page, rows);
+        courseDatagrid.setCode(0);
+        courseDatagrid.setCount(ordersList.size());
+        courseDatagrid.setData(ordersList1);
+        courseDatagrid.setMsg("订单信息查询结果");
+        return courseDatagrid;
+    }
+
+    @RequestMapping("/orderList")
+    public String inOrder(){
+        return "orders/orderlist";
+    }
+
 }
