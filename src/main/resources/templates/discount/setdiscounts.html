@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head  th:include="homePage_layout :: htmlhead">
+    <meta charset="UTF-8">
+    <title>折扣列表</title>
+</head>
+<body>
+<p style="margin-top: 20px"></p>
+<button type="button" class="layui-btn" data-type="add" id="addBtn">增加</button>
+<table class="layui-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>名称</th>
+        <th>折扣</th>
+        <th>管理</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--获取商品列表-->
+    <tr th:each="c:${discounts}">
+        <th th:text="${c.getId()}">id</th>
+        <th th:text="${c.getName()}">名称</th>
+        <th th:text="${c.getDiscount()}">折扣</th>
+        <th>
+            <button th:value="${c.getId()}" name="edit_discount" type="button" class="layui-btn layui-btn-sm" title="编辑"><i class="layui-icon"></i></button>
+        </th>
+    </tr>
+    </tbody>
+</table>
+<script type="text/javascript">
+    $("#addBtn").click(function () {
+        active.toedit("服装销售系统-添加折扣信息", 0);
+    });
+
+    $('#queryBtn').on('click', function(){
+        active.reload();
+    });
+
+    $("[name='edit_discount']").click(function () {
+        active.toedit("服装销售系统-编辑折扣信息", this.value);
+    });
+
+    var $ = layui.$, active = {
+        toedit: function (winTitle, cid) {
+            layer.open({
+                type: 2,
+                title: winTitle,
+                shadeClose: false,
+                shade: 0.5,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['900px', '500px'],
+                content: '/addDiscount/' + cid
+            });
+        }
+    }
+</script>
+</body>
+</html>
