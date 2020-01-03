@@ -1,5 +1,7 @@
 package com.xzit.salesmanagement.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xzit.salesmanagement.entity.Discount;
 import com.xzit.salesmanagement.mapper.DiscountMapper;
 import com.xzit.salesmanagement.service.DiscountService;
@@ -23,4 +25,16 @@ public class DiscountServiceImpl implements DiscountService {
     public List<Discount> listDiscount() {
         return discountMapper.findAllDiscount();
     }
+
+    @Override
+    public int addDiscount(Discount discount) {
+        return discountMapper.add(discount);
+    }
+
+    @Override
+    public int updateDiscount(Discount discount) {
+        return discountMapper.update(discount);
+    }
+
+
 }

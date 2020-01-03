@@ -10,6 +10,20 @@ public class Discount {
         return "Discount{" + "id=" + id + ", name='" + name + '\'' + ", discount=" + discount + '}';
     }
 
+    public Discount(String name, Double discount) {
+        this.name = name;
+        this.discount = discount;
+    }
+
+    public Discount() {
+    }
+
+    public Discount(int id, String name, Double discount) {
+        this.id = id;
+        this.name = name;
+        this.discount = discount;
+    }
+
     public int getId() {
         return id;
     }
