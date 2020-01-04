@@ -1,11 +1,9 @@
 package com.xzit.salesmanagement.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xzit.salesmanagement.entity.OrderItems;
+import com.xzit.salesmanagement.entity.*;
+import com.xzit.salesmanagement.service.ConsigneeService;
 import com.xzit.salesmanagement.util.CourseDatagrid;
-import com.xzit.salesmanagement.entity.Costume;
-import com.xzit.salesmanagement.entity.Orders;
-import com.xzit.salesmanagement.entity.Users;
 import com.xzit.salesmanagement.service.CostumeService;
 import com.xzit.salesmanagement.service.OrderItemService;
 import com.xzit.salesmanagement.service.OrdersService;
@@ -37,6 +35,9 @@ public class OrdersController {
     @Autowired
     private OrderItemService orderItemService;
 
+    @Autowired
+    private ConsigneeService consigneeService;
+
     @RequestMapping("/add/{cid}")
     public String add(@PathVariable("cid") String id, Model model){
         Costume costume =costumeService.getCostume(Integer.valueOf(id));
@@ -44,6 +45,7 @@ public class OrdersController {
         return "car/car_add";
     }
 
+    //为订单添加商品 若无订单信息，根据时间和用户创建订单
     @Transactional
     @RequestMapping(value = "/ajaxValid", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String submit(@RequestBody JSONObject jsonParam
@@ -56,11 +58,13 @@ public class OrdersController {
         HttpSession session=request.getSession();
         Users user=(Users) session.getAttribute("user");
         Orders orders = ordersService.getOrdersByState(user.getId());
+        System.out.println(orders);
         String date = "";
         if(orders==null){
             SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
             date =df.format(new Date())+user.getId();// new Date()为获取当前系统时间
             ordersService.createOrders(date,user.getId());
+            orders = ordersService.getOrdersByState(user.getId());
         }
         date = orders.getId();
         OrderItems orderItems = orderItemService.findAllByOrderIdAndCostumeId(date,id);
@@ -85,7 +89,6 @@ public class OrdersController {
             @RequestParam(value = "page",defaultValue = "1",required = false) int page,
             @RequestParam(value = "limit",defaultValue = "10",required = false) int rows,
             String states){
-        System.out.println(states);
         HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         HttpSession session=request.getSession();
         Users user=(Users) session.getAttribute("user");
@@ -114,7 +117,12 @@ public class OrdersController {
         Orders orders = ordersService.getOrdersById(id);
         session.setAttribute("orderId",id);
         model.addAttribute("order",orders);
+        Users user =(Users) session.getAttribute("user");
+        List<Consignee> list = consigneeService.listConsignee(user.getId());
+        model.addAttribute("consignee",list);
         return "orders/orderDetails";
     }
+
+
 
 }

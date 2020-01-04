@@ -21,4 +21,6 @@ public interface OrdersService {
                                          Integer pageNo, Integer pageSize);
 
     Orders getOrdersById(String id);
+
+    void update(Orders orders);
 }

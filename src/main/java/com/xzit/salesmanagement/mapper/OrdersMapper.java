@@ -4,6 +4,7 @@ import com.xzit.salesmanagement.entity.Orders;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -25,4 +26,7 @@ public interface OrdersMapper {
 
     @Select("select * from orders where id = #{id}")
     Orders findById(String id);
+
+    @Update("update orders set orderTime = #{orderTime} , total = #{total} , state = #{state} , consigneeId = #{consigneeId} , confirmTime = #{confirmTime} where id = #{id}")
+    void update(Orders orders);
 }

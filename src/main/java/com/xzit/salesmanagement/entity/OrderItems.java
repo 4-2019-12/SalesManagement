@@ -5,7 +5,24 @@ public class OrderItems {
     String orderId;
     int costumeId;
     int quantity;
+    Double discount;
     Costume costume;
+
+    public int getCostumeId() {
+        return costumeId;
+    }
+
+    public void setCostumeId(int costumeId) {
+        this.costumeId = costumeId;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
 
     public Costume getCostume() {
         return costume;
@@ -29,14 +46,6 @@ public class OrderItems {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
-    }
-
-    public int getCoustumeId() {
-        return costumeId;
-    }
-
-    public void setCoustumeId(int coustumeId) {
-        this.costumeId = coustumeId;
     }
 
     public int getQuantity() {

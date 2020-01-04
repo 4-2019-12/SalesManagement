@@ -1,15 +1,12 @@
 package com.xzit.salesmanagement.service.impl;
 
 import com.github.pagehelper.PageInfo;
-import com.xzit.salesmanagement.entity.OrderItems;
 import com.xzit.salesmanagement.entity.Orders;
 import com.xzit.salesmanagement.mapper.OrdersMapper;
 import com.xzit.salesmanagement.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -47,4 +44,10 @@ public class OrdersServiceImpl implements OrdersService {
     public Orders getOrdersById(String id) {
         return ordersMapper.findById(id);
     }
+
+    @Override
+    public void update(Orders orders) {
+        ordersMapper.update(orders);
+    }
+
 }

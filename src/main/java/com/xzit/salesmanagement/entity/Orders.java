@@ -1,15 +1,14 @@
 package com.xzit.salesmanagement.entity;
 
-import java.util.Date;
 
 public class Orders {
     String id;
-    Date orderTime;
+    String orderTime;
     Double total;
     String state;
-    String consigneeId;
-    Date confirmTime;
-    String userId;
+    int consigneeId;
+    String confirmTime;
+    int userId;
 
     @Override
     public String toString() {
@@ -24,11 +23,11 @@ public class Orders {
         this.id = id;
     }
 
-    public Date getOrderTime() {
+    public String getOrderTime() {
         return orderTime;
     }
 
-    public void setOrderTime(Date orderTime) {
+    public void setOrderTime(String orderTime) {
         this.orderTime = orderTime;
     }
 
@@ -48,27 +47,27 @@ public class Orders {
         this.state = state;
     }
 
-    public String getConsigneeId() {
+    public int getConsigneeId() {
         return consigneeId;
     }
 
-    public void setConsigneeId(String consigneeId) {
+    public void setConsigneeId(int consigneeId) {
         this.consigneeId = consigneeId;
     }
 
-    public Date getConfirmTime() {
+    public String getConfirmTime() {
         return confirmTime;
     }
 
-    public void setConfirmTime(Date confirmTime) {
+    public void setConfirmTime(String confirmTime) {
         this.confirmTime = confirmTime;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 }

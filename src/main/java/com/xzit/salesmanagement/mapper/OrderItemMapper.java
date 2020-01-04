@@ -20,7 +20,7 @@ public interface OrderItemMapper {
     @Select("select * from orderitems where orderId = #{orderId} and costumeId = #{costumeId}")
     OrderItems findAllByOrderIdAndCostumeId(String orderId, int costumeId);
 
-    @Update("update orderitems set quantity = #{quantity} where id = #{id}")
+    @Update("update orderitems set quantity = #{quantity}, discount = #{discount} where id = #{id}")
     void update(OrderItems orderItems);
 
     @Select("select * from orderitems where id = #{id}")
