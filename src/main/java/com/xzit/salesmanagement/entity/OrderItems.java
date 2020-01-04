@@ -3,8 +3,17 @@ package com.xzit.salesmanagement.entity;
 public class OrderItems {
     int id;
     String orderId;
-    String coustumeId;
+    int costumeId;
     int quantity;
+    Costume costume;
+
+    public Costume getCostume() {
+        return costume;
+    }
+
+    public void setCostume(Costume costume) {
+        this.costume = costume;
+    }
 
     public int getId() {
         return id;
@@ -22,12 +31,12 @@ public class OrderItems {
         this.orderId = orderId;
     }
 
-    public String getCoustumeId() {
-        return coustumeId;
+    public int getCoustumeId() {
+        return costumeId;
     }
 
-    public void setCoustumeId(String coustumeId) {
-        this.coustumeId = coustumeId;
+    public void setCoustumeId(int coustumeId) {
+        this.costumeId = coustumeId;
     }
 
     public int getQuantity() {
@@ -40,6 +49,6 @@ public class OrderItems {
 
     @Override
     public String toString() {
-        return "OrderItems{" + "id=" + id + ", orderId='" + orderId + '\'' + ", coustumeId='" + coustumeId + '\'' + ", quantity=" + quantity + '}';
+        return "OrderItems{" + "id=" + id + ", orderId='" + orderId + '\'' + ", coustumeId='" + costumeId + '\'' + ", quantity=" + quantity + '}';
     }
 }

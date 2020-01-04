@@ -1,7 +1,8 @@
 package com.xzit.salesmanagement.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xzit.salesmanagement.config.CourseDatagrid;
+import com.xzit.salesmanagement.entity.OrderItems;
+import com.xzit.salesmanagement.util.CourseDatagrid;
 import com.xzit.salesmanagement.entity.Costume;
 import com.xzit.salesmanagement.entity.Orders;
 import com.xzit.salesmanagement.entity.Users;
@@ -10,6 +11,7 @@ import com.xzit.salesmanagement.service.OrderItemService;
 import com.xzit.salesmanagement.service.OrdersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -37,12 +39,12 @@ public class OrdersController {
 
     @RequestMapping("/add/{cid}")
     public String add(@PathVariable("cid") String id, Model model){
-        System.out.println(id);
         Costume costume =costumeService.getCostume(Integer.valueOf(id));
         model.addAttribute("costume",costume);
         return "car/car_add";
     }
 
+    @Transactional
     @RequestMapping(value = "/ajaxValid", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String submit(@RequestBody JSONObject jsonParam
     ) throws Exception {
@@ -50,24 +52,31 @@ public class OrdersController {
         String json = jsonParam.toJSONString();
         int id = Integer.parseInt(JSONObject.parseObject(json).getString("id"));
         int number = Integer.parseInt(JSONObject.parseObject(json).getString("number"));
-        Orders orders = ordersService.getOrdersByState();
+        HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session=request.getSession();
+        Users user=(Users) session.getAttribute("user");
+        Orders orders = ordersService.getOrdersByState(user.getId());
         String date = "";
         if(orders==null){
-            HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            HttpSession session=request.getSession();
-            Users user=(Users) session.getAttribute("user");
             SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
             date =df.format(new Date())+user.getId();// new Date()为获取当前系统时间
             ordersService.createOrders(date,user.getId());
         }
         date = orders.getId();
-        orderItemService.addItem(date,id,number);
+        OrderItems orderItems = orderItemService.findAllByOrderIdAndCostumeId(date,id);
+        if(!(orderItems==null)){
+            orderItems.setQuantity(orderItems.getQuantity()+number);
+            orderItemService.update(orderItems);
+        }else {
+            orderItemService.addItem(date, id, number);
+        }
         Costume costume =costumeService.getCostume(id);
         costume.setStock(costume.getStock()-number);
         costumeService.updateCostume(costume);
-        System.out.println(orders);
+//        System.out.println(orders);
         return "costume/viewProducts";
     }
+
 
     //按条件分页查询课程信息
     @RequestMapping("/jwclist")
@@ -75,9 +84,12 @@ public class OrdersController {
     public CourseDatagrid<Orders> orderlist(
             @RequestParam(value = "page",defaultValue = "1",required = false) int page,
             @RequestParam(value = "limit",defaultValue = "10",required = false) int rows,
-            String state){
-
-        List<Orders> ordersList = ordersService.findAll();
+            String states){
+        System.out.println(states);
+        HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpSession session=request.getSession();
+        Users user=(Users) session.getAttribute("user");
+        List<Orders> ordersList = ordersService.findAllByUserId(user.getId());
         List<Orders> ordersList1 = new ArrayList<>();
         for (int i=page*rows-rows;i<page*rows&&i<ordersList.size();i++){
             ordersList1.add(ordersList.get(i));
@@ -94,6 +106,15 @@ public class OrdersController {
     @RequestMapping("/orderList")
     public String inOrder(){
         return "orders/orderlist";
+    }
+
+
+    @RequestMapping("/details/{id}")
+    public String details(@PathVariable("id") String id, Model model,HttpSession session){
+        Orders orders = ordersService.getOrdersById(id);
+        session.setAttribute("orderId",id);
+        model.addAttribute("order",orders);
+        return "orders/orderDetails";
     }
 
 }

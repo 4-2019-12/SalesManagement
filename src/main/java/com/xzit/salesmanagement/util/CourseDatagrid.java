@@ -1,4 +1,4 @@
-package com.xzit.salesmanagement.config;
+package com.xzit.salesmanagement.util;
 import java.util.List;
 
 public class CourseDatagrid<T> {

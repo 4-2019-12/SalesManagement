@@ -19,8 +19,8 @@ public class OrdersServiceImpl implements OrdersService {
     OrdersMapper ordersMapper;
 
     @Override
-    public Orders getOrdersByState() {
-        return ordersMapper.getOrdersBySate();
+    public Orders getOrdersByState(int userId) {
+        return ordersMapper.getOrdersBySate(userId);
     }
 
     @Override
@@ -34,7 +34,17 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
+    public List<Orders> findAllByUserId(int userId) {
+        return ordersMapper.findAllByUserId(userId);
+    }
+
+    @Override
     public PageInfo<Orders> jwcCourseinfoSelect(String state, Integer pageNo, Integer pageSize) {
         return null;
+    }
+
+    @Override
+    public Orders getOrdersById(String id) {
+        return ordersMapper.findById(id);
     }
 }

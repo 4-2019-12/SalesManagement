@@ -9,12 +9,16 @@ import java.util.List;
 
 public interface OrdersService {
 
-    public Orders getOrdersByState();
+    public Orders getOrdersByState(int userId);
 
     void createOrders(String date,int userId);
 
     List<Orders> findAll();
 
+    List<Orders> findAllByUserId(int userId);
+
     PageInfo<Orders> jwcCourseinfoSelect(String state,
                                          Integer pageNo, Integer pageSize);
+
+    Orders getOrdersById(String id);
 }

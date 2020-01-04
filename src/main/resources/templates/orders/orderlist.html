@@ -8,14 +8,19 @@
 <body>
 <!--数据查询-->
 <form class="layui-form">
-    <div class="layui-input-inline w149">
-        <select id="state">
-            <option value="0">选择状态</option>
-            <option value="nosubmit">未提交</option>
-            <option value="noexamine">未审核</option>
-            <option value="noconfirm">未确认</option>
-            <option value="completed">已完成</option>
-        </select>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">选择状态</label>
+            <div class="layui-input-inline">
+                <select id="states" name="states">
+                    <option value="0">选择状态</option>
+                    <option value="nosubmit">未提交</option>
+                    <option value="noexamine">未审核</option>
+                    <option value="noconfirm">未确认</option>
+                    <option value="completed">已完成</option>
+                </select>
+            </div>
+        </div>
     </div>
     <a class="layui-btn mgl-20" data-type="reload" id="queryBtn">查询</a>
 </form>
@@ -26,26 +31,26 @@
     <a class="layui-btn layui-btn-xs" lay-event="edit">详情</a>
 </script>
 
-<script src="${pageContext.request.contextPath}/plugins/layui/layui.js"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
     layui.use('table', function () {
         var table = layui.table;
 
         table.render({
             elem: '#orderlist'
-            , url: '/orderlist'
+            , url: '/car/jwclist'
             , title: '订单数据表'
-            , cols: [[
-                {type: 'checkbox', fixed: 'left'}
-                , {field: 'id', title: 'id', width: 100, hidden: true}
-                , {field: 'orderTime', title: '下订单时间', width: 120}
-                , {field: 'total', title: '总价格', width: 120}
-                , {field: 'state', title: '状态', width: 120}
-                , {field: 'consigneeId', title: '类别号', width: 120}
-                , {field: 'confirmTime', title: '确认时间', width: 160}
-                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
-            ]]
+            , cols: [
+                [
+                    // {type: 'checkbox', fixed: 'left'},
+                    {field: 'id', title: 'id', width: 100, hidden: true}
+                    , {field: 'orderTime', title: '下订单时间', width: 120}
+                    , {field: 'total', title: '总价格', width: 120}
+                    , {field: 'state', title: '状态', width: 120}
+                    , {field: 'consigneeId', title: '类别号', width: 120}
+                    , {field: 'confirmTime', title: '确认时间', width: 160}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                ]
+            ]
             , page: true
         });
 
@@ -58,19 +63,19 @@
                     }
                     , where: {
                         //重新加载条件
-                        state: $('#state').val()
+                        states: $('#states').val()
                     }
                 });
             },
-            toedit: function (winTitle, kcid) {
+            toedit: function (winTitle, id) {
                 layer.open({
                     type: 2,
-                    title: '徐州工程学院教学工作量核算系统-添加课程信息',
+                    title: winTitle,
                     shadeClose: false,
                     shade: 0.5,
                     maxmin: true, //开启最大化最小化按钮
-                    area: ['1000px', '600px'],
-                    content: '/orderlist/toedit/' + kcid
+                    area: ['800px', '600px'],
+                    content: '/car/details/' + id
                 });
             }
         };
@@ -81,7 +86,7 @@
 
         //监听行工具事件
         table.on('tool(orderlist)', function (obj) {
-            active.toedit("徐州工程学院教学工作量核算系统-修改课程信息", data.id);
+            active.toedit("服装销售系统-订单详情信息", obj.data.id);
         });
     });
 </script>
