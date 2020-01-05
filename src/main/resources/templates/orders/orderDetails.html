@@ -150,7 +150,6 @@
                         , type: "post"
                         , data: JSON.stringify({
                             "id": orderId,
-                            "consigneeId":consigneeId
                         })
                         , contentType: "application/json"
                         , dataType: "text"
@@ -170,12 +169,12 @@
             } else if (state == 'noconfirm') {
                 //确认订单操作
                 let orderId = $(".orderdetails_orderid").val();
+                alert("q确认订单操作");
                 $.ajax({
                     url: "/car/confirm"
                     , type: "post"
                     , data: JSON.stringify({
                         "id": orderId,
-                        "consigneeId":consigneeId
                     })
                     , contentType: "application/json"
                     , dataType: "text"
