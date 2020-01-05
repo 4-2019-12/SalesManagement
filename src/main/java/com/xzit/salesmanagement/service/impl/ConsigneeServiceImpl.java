@@ -17,4 +17,19 @@ public class ConsigneeServiceImpl implements ConsigneeService {
     public List<Consignee> listConsignee(int userId) {
         return consigneeMapper.list(userId);
     }
+
+    @Override
+    public Consignee findById(int id) {
+        return consigneeMapper.findById(id);
+    }
+
+    @Override
+    public void update(Consignee consignee) {
+        consigneeMapper.update(consignee);
+    }
+
+    @Override
+    public void add(Consignee consignee) {
+        consigneeMapper.add(consignee);
+    }
 }

@@ -8,6 +8,18 @@ public class Consignee {
     private String name;
     private int role;
 
+    public Consignee() {
+    }
+
+    public Consignee(int id, int userId, String mobile, String address, String name, int role) {
+        this.id = id;
+        this.userId = userId;
+        this.mobile = mobile;
+        this.address = address;
+        this.name = name;
+        this.role = role;
+    }
+
     public int getId() {
         return id;
     }

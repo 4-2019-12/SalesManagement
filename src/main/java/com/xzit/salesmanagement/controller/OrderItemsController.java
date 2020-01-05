@@ -38,6 +38,13 @@ public class OrderItemsController {
     @Autowired
     DiscountService discountService;
 
+    /**
+     * 获取单个订单详情
+     * @param page
+     * @param rows
+     * @param states
+     * @return
+     */
     @RequestMapping("/detail")
     @ResponseBody
     public CourseDatagrid<OrderItemsResult> orderlist(
@@ -66,6 +73,11 @@ public class OrderItemsController {
         return courseDatagrid;
     }
 
+    /**
+     * 订单详情删除订单项
+     * @param data
+     * @return
+     */
     @RequestMapping(value = "/del",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String del(@RequestBody JSONObject data){
@@ -80,6 +92,13 @@ public class OrderItemsController {
         return "success";
     }
 
+
+    /**
+     *
+     * 订单详情改变商品数量，更新数据库
+     * @param data
+     * @return
+     */
     @RequestMapping(value = "/update",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String update(@RequestBody JSONObject data){
@@ -101,6 +120,8 @@ public class OrderItemsController {
         return "success";
     }
 
+
+    //销售提交订单，等待审核
     @RequestMapping(value = "/submit",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String submit(@RequestBody JSONObject jsonParam){

@@ -8,4 +8,8 @@ public interface CategoryService {
     public Category getCategory(int id);
 
     public List<Category> listCategory();
+
+    void update(Category category);
+
+    void add(Category category);
 }

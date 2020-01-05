@@ -22,11 +22,11 @@ public class Category {
         this.name = name;
     }
 
-    public String getDescribe() {
+    public String getDescribes() {
         return describes;
     }
 
-    public void setDescribe(String describes) {
+    public void setDescribes(String describes) {
         this.describes = describes;
     }
 

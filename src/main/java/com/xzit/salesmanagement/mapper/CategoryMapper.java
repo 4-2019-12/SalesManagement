@@ -12,10 +12,13 @@ public interface CategoryMapper {
 //
     @Select("select * from category")
     List<Category> findAllCategory();
-//
-//    @Insert(" insert into category_ ( name,a) values (#{name},#{a}) ")
-//    public int save(Category category);
-//
+
+    @Update("update category set name=#{name},describes=#{describes} where id=#{id} ")
+    void update(Category category);
+
+    @Insert(" insert into category ( name,describes) values (#{name},#{describes}) ")
+    public int add(Category category);
+
 //    @Delete(" delete from category_ where id= #{id} ")
 //    public void delete(int id);
 //

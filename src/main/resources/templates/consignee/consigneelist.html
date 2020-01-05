@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="homePage_layout :: htmlhead">
     <meta charset="utf-8">
-    <title>类别信息列表</title>
+    <title>客户信息列表</title>
 </head>
 
 <body>
@@ -18,16 +18,19 @@
 <script>
     layui.use('table', function () {
         var table = layui.table;
+
         table.render({
             elem: '#list'
-            , url: '/category/list'
-            , title: '类别数据表'
+            , url: '/consignee/list'
+            , title: '客户数据表'
             , cols: [
                 [
                     // {type: 'checkbox', fixed: 'left'},
                     {field: 'id', title: 'id', width: 100, hidden: true}
-                    , {field: 'name', title: '类别名', width: 120}
-                    , {field: 'describes', title: '类别描述', width: 220}
+                    , {field: 'name', title: '客户姓名', width: 120}
+                    , {field: 'mobile', title: '联系方式', width: 120}
+                    , {field: 'address', title: '地址', width: 120}
+                    , {field: 'role', title: '等级', width: 120}
                     , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
                 ]
             ]
@@ -55,18 +58,18 @@
                     shade: 0.5,
                     maxmin: true, //开启最大化最小化按钮
                     area: ['1000px', '600px'],
-                    content: '/category/edit/' + id
+                    content: '/consignee/edit/' + id
                 });
             }
         };
 
         $('#addBtn').on('click', function () {
-            active.toedit("服装销售系统-添加类别信息",0);
+            active.toedit("服装销售系统-添加客户信息",0);
         });
 
         //监听行工具事件
         table.on('tool(list)', function (obj) {
-            active.toedit("服装销售系统-编辑类别信息", obj.data.id);
+            active.toedit("服装销售系统-编辑客户信息", obj.data.id);
         });
     });
 </script>

@@ -39,6 +39,8 @@
 <input style="margin-left: 40%" type="button" class="layui-btn" id="orderdetail_submit"/>
 <button class="layui-btn layui-btn-primary btn-close">关闭</button>
 
+</body>
+</html>
 <script>
 
     layui.use('table', function () {
@@ -124,26 +126,24 @@
         let text;
         if (state == 'nosubmit') {
             text = "提交订单";
-            $("[name='consigneeId']").attr('readonly', false);
         } else if (state == 'noconfirm') {
             text = "确认订单";
-            $("#barDemo").attr('readonly', "true");
         } else if (state == 'noexamine') {
             text = "等待审核";
-            $("#barDemo").attr('readonly', "true");
-            $(".layui-btn-xs").attr("display","none");
-            $("[name='consigneeId']").attr('readonly', true);
-        } else {
+        } else if(state=='notpass'){
+            text = "提交订单";
+        }else {
             text = "已完成";
         }
         $("#orderdetail_submit").attr("value", text);
 
         $("#orderdetail_submit").click(function () {
-            if (state == 'nosubmit') {
+            if (state == 'nosubmit'||state=='notpass') {
                 let consigneeId =$("[name='consigneeId']").val();
                 if(consigneeId ==0){
                     alert("请选择收货人！");
                 }else {
+                    //提交订单操作
                     let orderId = $(".orderdetails_orderid").val();
                     $.ajax({
                         url: "/orderItems/submit"
@@ -156,6 +156,9 @@
                         , dataType: "text"
                         , success: function (result) {
                             alert(result);
+                            let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.location.reload();
+                            parent.layer.close(index); //再执行关闭
                             //请求发送成功后
                         },
                         error: function (e) {
@@ -165,14 +168,34 @@
                     });
                 }
             } else if (state == 'noconfirm') {
-                text = "确认订单";
+                //确认订单操作
+                let orderId = $(".orderdetails_orderid").val();
+                $.ajax({
+                    url: "/car/confirm"
+                    , type: "post"
+                    , data: JSON.stringify({
+                        "id": orderId,
+                        "consigneeId":consigneeId
+                    })
+                    , contentType: "application/json"
+                    , dataType: "text"
+                    , success: function (result) {
+                        alert(result);
+                        let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.location.reload();
+                        parent.layer.close(index); //再执行关闭
+                        //请求发送成功后
+                    },
+                    error: function (e) {
+                        //请求发送失败
+                        alert("error");
+                    }
+                });
             } else if (state == 'noexamine') {
                 text = "等待审核";
-            } else {
+            }else {
                 text = "已完成";
             }
         });
     });
 </script>
-</body>
-</html>

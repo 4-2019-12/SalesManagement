@@ -15,7 +15,6 @@
                 <select id="states" name="states">
                     <option value="0">选择状态</option>
                     <option value="nosubmit">未提交</option>
-                    <option value="notpass">未通过</option>
                     <option value="noexamine">未审核</option>
                     <option value="noconfirm">未确认</option>
                     <option value="completed">已完成</option>
@@ -38,7 +37,7 @@
 
         table.render({
             elem: '#orderlist'
-            , url: '/car/jwclist'
+            , url: '/car/alllist'
             , title: '订单数据表'
             , cols: [
                 [
@@ -76,7 +75,7 @@
                     shade: 0.5,
                     maxmin: true, //开启最大化最小化按钮
                     area: ['800px', '600px'],
-                    content: '/car/details/' + id
+                    content: '/car/details_manager/' + id
                 });
             }
         };
