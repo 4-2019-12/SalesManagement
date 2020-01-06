@@ -44,7 +44,7 @@ public class CostumeController {
     //跳转管理商品页面
     @RequestMapping(value = "/listCostume")
     public String listCostume(Model model) {
-        List<Costume> queryResult = costumeService.findAllByPageF(1, 5);
+        List<Costume> queryResult = costumeService.findAllByPageF(1, 999);
 //        PageInfo<Costume> queryResult = costumeService.findAllByPageS(1, 5);
         PageInfo<Costume> pageInfo = new PageInfo<Costume>(queryResult);
 //        System.out.println(queryResult);

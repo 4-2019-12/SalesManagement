@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="homePage_layout :: htmlhead">
+    <meta charset="UTF-8">
+    <title>统计列表</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.5/css/layui.css}"/>
+    <script th:src="@{/webjars/layui/2.5.5/layui.js}"></script>
+    <script th:src="@{/webjars/layui/2.5.5/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery/jquery-3.3.1.min.js}"></script>
+<body>
+<table id="tabList" class="layui-table">
+    <thead>
+    <tr>
+        <th>日期</th>
+        <th>订单数量</th>
+        <th>金额总计</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--获取商品列表-->
+    <tr th:each="c:${funds}">
+        <th th:text="${c.getId()}">1</th>
+        <th th:text="${c.getNumber()}">2</th>
+        <th th:text="${c.getTotal()}">3</th>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

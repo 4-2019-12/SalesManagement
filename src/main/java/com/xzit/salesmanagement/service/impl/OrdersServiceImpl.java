@@ -36,6 +36,11 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
+    public List<Orders> findAllByUserIdAndState(int userId, String state) {
+        return ordersMapper.findAllByUserIdAndStaet(userId,state);
+    }
+
+    @Override
     public PageInfo<Orders> jwcCourseinfoSelect(String state, Integer pageNo, Integer pageSize) {
         return null;
     }
