@@ -236,6 +236,9 @@ public class OrdersController {
         String orderId = (String)session.getAttribute("orderId");
         Orders orders =  ordersService.getOrdersById(orderId);
         orders.setState("completed");
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
+        String date =df.format(new Date());// new Date()为获取当前系统时间
+        orders.setConfirmTime(date);
         ordersService.update(orders);
         return "success";
     }
