@@ -29,4 +29,7 @@ public interface OrdersMapper {
 
     @Update("update orders set orderTime = #{orderTime} , total = #{total} , state = #{state} , consigneeId = #{consigneeId} , confirmTime = #{confirmTime} where id = #{id}")
     void update(Orders orders);
+
+    @Select("select * from orders where userId = #{userId} and state = #{state}")
+    List<Orders> findAllByUserIdAndStaet(int userId, String state);
 }

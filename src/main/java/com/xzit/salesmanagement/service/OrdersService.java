@@ -17,6 +17,8 @@ public interface OrdersService {
 
     List<Orders> findAllByUserId(int userId);
 
+    List<Orders> findAllByUserIdAndState(int userId,String state);
+
     PageInfo<Orders> jwcCourseinfoSelect(String state,
                                          Integer pageNo, Integer pageSize);
 

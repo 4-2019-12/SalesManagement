@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50562
 File Encoding         : 65001
 
-Date: 2020-01-05 15:26:49
+Date: 2020-01-06 16:00:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -43,7 +43,7 @@ CREATE TABLE `category` (
   `name` varchar(50) DEFAULT NULL,
   `describes` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of category
@@ -58,6 +58,8 @@ INSERT INTO `category` VALUES ('7', '春秋下装', '春秋季牛仔裤、休闲
 INSERT INTO `category` VALUES ('8', '冬季下装', '冬季加厚牛仔裤、秋裤、休闲裤、打底裤');
 INSERT INTO `category` VALUES ('9', '冬季上装', '冬季羽绒服、棉服');
 INSERT INTO `category` VALUES ('10', '冬季棉鞋', '冬季棉靴');
+INSERT INTO `category` VALUES ('11', '汉服', '古装风格衣服');
+INSERT INTO `category` VALUES ('12', 'cospaly', '动漫角色扮演衣服');
 
 -- ----------------------------
 -- Table structure for `consignee`
@@ -99,15 +101,19 @@ CREATE TABLE `costume` (
   KEY `discountId` (`discountId`),
   CONSTRAINT `Category_Costume_FK1` FOREIGN KEY (`categoryId`) REFERENCES `category` (`id`),
   CONSTRAINT `Discount_Costume_FK1` FOREIGN KEY (`discountId`) REFERENCES `discount` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of costume
 -- ----------------------------
-INSERT INTO `costume` VALUES ('1', '199.00', '男士亚麻衬衫米白', '/upload/costume_img/img-1.jpg', '100.00', '春季白衬衫男长袖商务免烫加厚衬衣修身西装职业正装', '1', '95', '1', '1');
-INSERT INTO `costume` VALUES ('2', '99.00', '女士纯棉背心', '/upload/costume_img/img-2.jpg', '44.00', '夏季女士潮流轻薄透气运动瑜伽背心', '2', '110', '1', '5');
-INSERT INTO `costume` VALUES ('3', '149.00', '女士小V领白衬衫', '/upload/costume_img/img-3.jpg', '66.00', '春秋女生白衬衫潮流显瘦', '6', '50', '1', '1');
-INSERT INTO `costume` VALUES ('4', '169.00', '男士polo衫', '/upload/costume_img/img-4.jpg', '70.00', '夏季男生显瘦潮流短袖衬衫', '4', '200', '1', '3');
+INSERT INTO `costume` VALUES ('1', '199.00', '男士亚麻衬衫米白', '/upload/costume_img/img-1.jpg', '100.00', '春季白衬衫男长袖商务免烫加厚衬衣修身西装职业正装', '1', '65', '1', '1');
+INSERT INTO `costume` VALUES ('2', '99.00', '女士纯棉背心', '/upload/costume_img/img-2.jpg', '44.00', '夏季女士潮流轻薄透气运动瑜伽背心', '2', '58', '1', '5');
+INSERT INTO `costume` VALUES ('3', '149.00', '女士小V领白衬衫', '/upload/costume_img/img-3.jpg', '66.00', '春秋女生白衬衫潮流显瘦', '6', '20', '1', '1');
+INSERT INTO `costume` VALUES ('4', '169.00', '男士polo衫', '/upload/costume_img/img-4.jpg', '70.00', '夏季男生显瘦潮流短袖衬衫', '4', '100', '1', '3');
+INSERT INTO `costume` VALUES ('5', '299.00', '笑脸毛绒外套', '/upload/costume_img/445b9c4c-470f-4a66-ada8-8e9e2d5b0fb1.jpg', '40.00', '急急急急急急急急急急急急急急急急急急经济', '6', '100', null, '1');
+INSERT INTO `costume` VALUES ('6', '110.00', '女士春秋夹克外套', '/upload/costume_img/4ea0ab2e-9ec2-4fb2-843b-733904d1624d.jpg', '80.00', '春秋女士时尚笑脸夹克外套', '6', '30', null, '1');
+INSERT INTO `costume` VALUES ('9', '230.00', '女士棉服', '/upload/costume_img/856b096e-59a5-400b-b4d1-05f52a99b00b.jpg', '110.00', '冬季女生白色棉服', '9', '60', null, '4');
+INSERT INTO `costume` VALUES ('10', '130.00', '女士哈伦裤', '/upload/costume_img/ef24689f-5e0a-4c65-aac4-875bb260170c.jpg', '60.00', '秋冬季女士时尚哈伦裤', '8', '56', null, '2');
 
 -- ----------------------------
 -- Table structure for `discount`
@@ -185,7 +191,7 @@ CREATE TABLE `orderitems` (
   KEY `orderId` (`orderId`),
   KEY `coustumeId` (`costumeId`),
   CONSTRAINT `Orders_OrderItems_FK1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of orderitems
@@ -196,8 +202,13 @@ INSERT INTO `orderitems` VALUES ('6', '20200102222153', '4', '50', null);
 INSERT INTO `orderitems` VALUES ('7', '20200102222153', '1', '100', null);
 INSERT INTO `orderitems` VALUES ('8', '202001031715282', '1', '200', '0.88');
 INSERT INTO `orderitems` VALUES ('12', '202001031715282', '2', '50', '1');
-INSERT INTO `orderitems` VALUES ('13', '202001042229372', '3', '5', null);
-INSERT INTO `orderitems` VALUES ('14', '202001042229372', '1', '5', null);
+INSERT INTO `orderitems` VALUES ('13', '202001042229372', '3', '15', '0.88');
+INSERT INTO `orderitems` VALUES ('14', '202001042229372', '1', '5', '0.88');
+INSERT INTO `orderitems` VALUES ('15', '202001051530272', '3', '20', '0.88');
+INSERT INTO `orderitems` VALUES ('16', '202001051530272', '1', '30', '0.88');
+INSERT INTO `orderitems` VALUES ('17', '202001051531562', '4', '100', '0.98');
+INSERT INTO `orderitems` VALUES ('18', '202001051531562', '2', '50', '1');
+INSERT INTO `orderitems` VALUES ('19', '202001051533392', '2', '2', null);
 
 -- ----------------------------
 -- Table structure for `orders`
@@ -217,9 +228,27 @@ CREATE TABLE `orders` (
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
+INSERT INTO `orders` VALUES ('201704131632252', '2017-04-13-16:33:45', '5236', 'completed', '1', '2017-04-14-15:12:25', '2');
+INSERT INTO `orders` VALUES ('201706101835192', '2017-06-10-18:37:19', '1475', 'completed', '1', '2017-06-10-20:35:18', '2');
+INSERT INTO `orders` VALUES ('201706131535412', '2017-06-13-15:36:48', '599', 'completed', '1', '2017-06-14-13:12:15', '2');
+INSERT INTO `orders` VALUES ('201709151235472', '2017-09-15-12:35:55', '2635', 'completed', '1', '2017-09-15-13:45:19', '2');
+INSERT INTO `orders` VALUES ('201711110715192', '2017-11-11-07:16:18', '999', 'completed', '1', '2017-11-11-08:16:18', '2');
+INSERT INTO `orders` VALUES ('201711110745322', '2017-11-11-08:46:12', '5888', 'completed', '1', '2017-11-11-09:35:42', '2');
+INSERT INTO `orders` VALUES ('201711111015322', '2017-11-11-10:16:48', '1435.5', 'completed', '1', '2017-11-11-11:35:25', '2');
+INSERT INTO `orders` VALUES ('201711280945122', '2017-11-28-09:46:12', '1999', 'completed', '1', '2017-11-29-10:35:48', '2');
+INSERT INTO `orders` VALUES ('201712051530252', '2017-12-05-15:31:25', '7854.5', 'completed', '1', '2017-12-06-12:25:36', '2');
+INSERT INTO `orders` VALUES ('201712201810222', '2017-12-20-18:11:25', '1689', 'completed', '1', '2017-12-21-15:10:35', '2');
+INSERT INTO `orders` VALUES ('201712231524322', '2017-12-23-15:25:35', '4584', 'completed', '1', '2017-12-24-15:35:48', '2');
+INSERT INTO `orders` VALUES ('201712251035482', '2017-12-25-10:36:48', '1525', 'completed', '1', '2017-12-26-10:36:50', '2');
+INSERT INTO `orders` VALUES ('201801011235482', '2018-01-01-12:35:58', '4126.5', 'completed', '1', '2018-01-02-12:35:52', '2');
+INSERT INTO `orders` VALUES ('201801031425352', '2018-01-03-14:26:35', '51452', 'completed', '1', '2018-01-03-15:26:35', '2');
+INSERT INTO `orders` VALUES ('201901051533392', '2019-01-05-15:34:49', '77998.4', 'completed', '1', '2019-01-06-15:31:49', '2');
 INSERT INTO `orders` VALUES ('20200102222153', '', '0', 'nosubmit', null, null, '1');
-INSERT INTO `orders` VALUES ('202001031715282', '2020-01-05-12:26:26', '39974', 'noexamine', '1', null, '2');
-INSERT INTO `orders` VALUES ('202001042229372', null, null, 'nosubmit', null, null, '2');
+INSERT INTO `orders` VALUES ('202001031715282', '2020-01-05-12:26:26', '39974', 'noconfirm', '1', null, '2');
+INSERT INTO `orders` VALUES ('202001042229372', '2020-01-05-15:30:20', '2842.4', 'notpass', '2', null, '2');
+INSERT INTO `orders` VALUES ('202001051530272', '2020-01-05-15:31:49', '7876', 'completed', '1', '20200106142731', '2');
+INSERT INTO `orders` VALUES ('202001051531562', '2020-01-05-15:33:31', '21512', 'noexamine', '2', null, '2');
+INSERT INTO `orders` VALUES ('202001051533392', null, null, 'nosubmit', null, null, '2');
 
 -- ----------------------------
 -- Table structure for `purchase`
@@ -286,7 +315,7 @@ CREATE TABLE `roles_jurisdiction` (
   KEY `roleId` (`roleId`),
   CONSTRAINT `Jurisdiction_Roles_Jurisdiction_FK1` FOREIGN KEY (`jurisdictionId`) REFERENCES `jurisdiction` (`id`),
   CONSTRAINT `Roles_Roles_Jurisdiction_FK1` FOREIGN KEY (`roleId`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of roles_jurisdiction

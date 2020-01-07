@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="homePage_layout :: htmlhead">
+    <meta charset="UTF-8">
+    <title>统计列表</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.5/css/layui.css}"/>
+    <script th:src="@{/webjars/layui/2.5.5/layui.js}"></script>
+    <script th:src="@{/webjars/layui/2.5.5/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery/jquery-3.3.1.min.js}"></script>
+</head>
+<body>
+<div class="layui-form-item">
+    <label class="layui-form-label" style="width: 200px;">选择统计类型</label>
+    <div class="layui-input-block">
+        <select id="interest" lay-filter="aihao">
+            <option value="0" selected>日统计</option>
+            <option value="1">月统计</option>
+            <option value="2">年统计</option>
+        </select>
+    </div>
+</div>
+<div id="content1">
+    <table id="tabList" class="layui-table">
+        <thead>
+        <tr>
+            <th>日期</th>
+            <th>订单数量</th>
+            <th>金额总计</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--获取商品列表-->
+        <tr th:each="c:${funds}">
+            <th th:text="${c.getId()}">1</th>
+            <th th:text="${c.getNumber()}">2</th>
+            <th th:text="${c.getTotal()}">3</th>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $("#interest").change(function () {
+        let val = $("#interest").val();
+        $("#content1").load("fund/change1", {symbol:val});
+    });
+</script>
+</body>
+</html>
