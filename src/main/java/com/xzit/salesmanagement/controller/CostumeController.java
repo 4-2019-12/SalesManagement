@@ -42,7 +42,7 @@ public class CostumeController {
     }
 
     //跳转管理商品页面
-    @RequestMapping(value = "/listCostume")
+    @RequestMapping(value = "/listCostume")//调用类
     public String listCostume(Model model) {
         List<Costume> queryResult = costumeService.findAllByPageF(1, 5);
 //        PageInfo<Costume> queryResult = costumeService.findAllByPageS(1, 5);

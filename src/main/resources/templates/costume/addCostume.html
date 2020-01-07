@@ -75,13 +75,13 @@
         <div class="layui-inline">
             <label class="layui-form-label">商品成本</label>
             <div class="layui-input-inline">
-                <input type="text" th:value="${costume?.getCost()}" name="cost" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" type="number" th:value="${costume?.getCost()}" name="cost" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
             <label class="layui-form-label">设置库存</label>
             <div class="layui-input-inline">
-                <input type="text" th:value="${costume?.getStock()}" name="stock" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" type="number" th:value="${costume?.getStock()}" name="stock" lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
